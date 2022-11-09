@@ -7,6 +7,7 @@ async def set_default_commands(bot: Bot):
         commands=[
             BotCommand('get_passwords', 'get passwords'),
             BotCommand('create_password', 'create password'),
+            BotCommand('delete_passwords', 'delete all passwords'),
             BotCommand('user_info', 'get user info')
         ],
         scope=BotCommandScopeDefault()

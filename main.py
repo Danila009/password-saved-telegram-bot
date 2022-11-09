@@ -6,6 +6,8 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 
 from bot.data.config import BOT_TOKEN
 from bot.handlers.password.create_password import register_create_password
+from bot.handlers.password.delete_password import register_delete_password
+from bot.handlers.password.get_password import register_get_password
 from bot.handlers.start_bot import register_start_bot
 from bot.handlers.user.user import register_user
 from bot.services.setting_commands import set_default_commands
@@ -17,6 +19,8 @@ def register_all_handlers(dp: Dispatcher):
     register_start_bot(dp=dp)
     register_user(dp=dp)
     register_create_password(dp=dp)
+    register_get_password(dp=dp)
+    register_delete_password(dp=dp)
 
 
 async def on_startup(dp: Dispatcher):
