@@ -3,8 +3,9 @@ import logging
 
 from aiogram import Bot, Dispatcher
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
+from aiogram.utils.executor import start_webhook
 
-from bot.data.config import BOT_TOKEN
+from bot.data.config import BOT_TOKEN, WEBHOOK_URL, WEBHOOK_PATH, WEBAPP_HOST, WEBAPP_PORT
 from bot.handlers.errors.errors_handler import register_errors_handler
 from bot.handlers.password.create_password import register_create_password
 from bot.handlers.password.delete_password import register_delete_password
@@ -42,6 +43,8 @@ def register_all_handlers():
 
 
 async def on_startup():
+    await bot.set_webhook(WEBHOOK_URL, drop_pending_updates=True)
+
     loop = asyncio.get_event_loop()
     loop.create_task(task())
 
@@ -53,6 +56,10 @@ async def set_all_default_commands():
     await set_default_commands(bot=bot)
 
 
+async def on_shutdown():
+    await bot.delete_webhook()
+
+
 async def main():
     try:
         logging.basicConfig(level=logging.INFO)
@@ -60,10 +67,16 @@ async def main():
         await set_all_default_commands()
         register_all_handlers()
 
-        await on_startup()
-        await dp.start_polling()
+        start_webhook(
+            dispatcher=dp,
+            webhook_path=WEBHOOK_PATH,
+            skip_updates=True,
+            on_startup=on_startup,
+            on_shutdown=on_shutdown,
+            host=WEBAPP_HOST,
+            port=WEBAPP_PORT,
+        )
 
-        await bot.get_webhook_info()
     finally:
         await bot.delete_webhook()
         await dp.storage.close()
