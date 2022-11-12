@@ -26,6 +26,10 @@ async def get_passwords(user_id: int, search: str = None):
         return Password.select().where(Password.user == user_id)
 
 
+async def get_count_passwords(user_id: int):
+    return Password.select().where(Password.user == user_id).count()
+
+
 async def delete_password(password_id: int):
     qry = Password.delete_by_id(password_id)
     qry.execute()

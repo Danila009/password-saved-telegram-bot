@@ -12,6 +12,11 @@ async def get_user_by_id(user_id: int):
     return user
 
 
+async def update_user_language(user_id: int, language: str):
+    qry = User.update({User.language: language}).where(User.user_id == user_id)
+    qry.execute()
+
+
 async def get_users():
     for user in User.select():
         print(str(user.username))

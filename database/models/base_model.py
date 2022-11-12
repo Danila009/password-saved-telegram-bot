@@ -1,6 +1,9 @@
-from peewee import Model, SqliteDatabase
+from peewee import Model
+from playhouse.db_url import connect
 
-db = SqliteDatabase('password_saved_database.sqlite')
+from bot.data.config import DATABASE_URL
+
+db = connect(DATABASE_URL)
 
 
 class BaseModel(Model):
