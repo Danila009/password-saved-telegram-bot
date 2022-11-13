@@ -4,5 +4,5 @@ from database.users.models.user_model import User
 
 
 def create_database():
-    with db:
-        db.create_tables([User, Password])
+    db.connect()
+    db.create_tables([User, Password])
