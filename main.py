@@ -56,9 +56,6 @@ async def set_all_default_commands():
 
 async def main():
     try:
-        key = Fernet.generate_key()
-        print(key.decode())
-
         logging.basicConfig(level=logging.INFO)
 
         await set_all_default_commands()
