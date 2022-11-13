@@ -9,4 +9,3 @@ DATABASE_URL = os.environ.get('DATABASE_URL')
 I18N_DOMAIN = "password_save_telegram_bot"
 BASE_DIR = Path('main.py').parent
 LOCALES_DIR = BASE_DIR / 'locales'
-
