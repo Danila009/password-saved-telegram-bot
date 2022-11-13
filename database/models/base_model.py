@@ -1,9 +1,13 @@
-from peewee import Model, PostgresqlDatabase
-from playhouse.cockroachdb import CockroachDatabase
+from peewee import Model, MySQLDatabase
 
-from bot.data.config import DATABASE_URL
-
-db = CockroachDatabase(DATABASE_URL)
+db = MySQLDatabase(
+    database='ISPr24-39_BeluakovDS_Password_Saved_Telegram_Bot',
+    user='ISPr24-39_BeluakovDS',
+    password='ISPr24-39_BeluakovDS',
+    host='cfif31.ru',
+    port=3306,
+    charset='utf8'
+)
 
 
 class BaseModel(Model):
