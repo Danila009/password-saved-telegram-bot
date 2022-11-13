@@ -1,15 +1,12 @@
 from database.passwords.models.password_model import Password
 from database.users.models.user_model import User
-from database.utils.encrypt_decrypt import encrypt
 
 
 async def create_password(user_id: int, title: str, password: str, description: str = None):
     user = User.get_by_id(user_id)
 
-    password_encrypt = encrypt(message=password.encode())
-
     if user:
-        new_password = Password.create(user=user, title=title, password=str(password_encrypt),
+        new_password = Password.create(user=user, title=title, password=password,
                                        description=description)
         return new_password.password_id
 

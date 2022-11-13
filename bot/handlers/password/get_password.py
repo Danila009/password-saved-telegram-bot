@@ -12,7 +12,6 @@ from bot.handlers.password.keyboards.inline.confirmation_delete_password import 
     delete_password_by_id_markup
 from bot.middleware.language_middleware import ACLMiddleware
 from database.passwords import passwotd_data_store
-from database.utils.encrypt_decrypt import decrypt
 
 
 async def get_passwords(message: types.Message):
@@ -24,7 +23,7 @@ async def get_passwords(message: types.Message):
             await message.answer(
                 text=_('\nЗаголовок: {}\n'
                        'Пароль: {}\nОписание:{}\n').format(
-                    password.title, decrypt(password.password), password.description or "-"
+                    password.title, password.password, password.description or "-"
                 ),
                 reply_markup=delete_password_by_id_markup(password_id=password.password_id, _=_)
             )
@@ -41,7 +40,7 @@ async def get_passwords_table(message: types.Message):
         table.field_names = [_('Заголовок'), _('Пароль'), _('Описание')]
 
         for password in passwords:
-            table.add_row([password.title, decrypt(password.password), password.description or '-'])
+            table.add_row([password.title, password.password, password.description or '-'])
 
         await message.answer(text=table.get_string())
         print(table)
@@ -86,7 +85,7 @@ async def get_passwords_file(message: types.Message):
         for index, password in enumerate(passwords):
             ws.write(index + 1, 0, password.password_id, text_style)
             ws.write(index + 1, 1, password.title, text_style)
-            ws.write(index + 1, 2, decrypt(password.password), text_style)
+            ws.write(index + 1, 2, password.password, text_style)
             ws.write(index + 1, 3, password.description or "-", text_style)
             ws.write(index + 1, 4, password.create_date, text_style)
             ws.write(index + 1, 5, password.user.user_id, text_style)
