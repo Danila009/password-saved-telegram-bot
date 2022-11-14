@@ -3,7 +3,6 @@ import logging
 
 from aiogram import Bot, Dispatcher
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
-from cryptography.fernet import Fernet
 
 from bot.data.config import BOT_TOKEN
 from bot.handlers.errors.errors_handler import register_errors_handler
