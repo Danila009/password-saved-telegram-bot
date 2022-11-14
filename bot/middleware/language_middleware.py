@@ -8,7 +8,8 @@ from database.users.user_data_store import get_user_by_id
 
 async def get_lang(user_id: int):
     user = await get_user_by_id(user_id=user_id)
-    return user.language
+    if user:
+        return user.language
 
 
 class ACLMiddleware(I18nMiddleware):
